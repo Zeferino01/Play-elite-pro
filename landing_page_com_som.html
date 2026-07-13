@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Gaming - Sua Jornada Começa Aqui</title>
+    <style>
+        /* ============================================
+           RESET E VARIÁVEIS GLOBAIS
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-black: #000000;
+            --color-orange: #FF6A00;
+            --color-yellow: #FFD000;
+            --color-dark-gray: #0a0a0a;
+            --color-light-gray: #1a1a1a;
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-fast: all 0.15s ease-out;
+        }
+
+        /* ============================================
+           ESTILOS GLOBAIS
+           ============================================ */
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-black);
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ============================================
+           CONTAINER PRINCIPAL
+           ============================================ */
+        .container {
+            width: 100%;
+            height: 100vh;
+            max-width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ============================================
+           BACKGROUND COM PARTÍCULAS E GRADIENTES
+           ============================================ */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .gradient-blur {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 106, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: floatGradient 15s ease-in-out infinite;
+            top: -200px;
+            right: -200px;
+        }
+
+        .gradient-blur-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 208, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: floatGradient 20s ease-in-out infinite reverse;
+            bottom: -150px;
+            left: -150px;
+        }
+
+        @keyframes floatGradient {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: floatParticle 20s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% { opacity: 0; transform: translateY(100vh) translateX(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100vh) translateX(100px); }
+        }
+
+        /* ============================================
+           CONTEÚDO PRINCIPAL
+           ============================================ */
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        /* ============================================
+           SEÇÃO DE VÍDEO VERTICAL
+           ============================================ */
+        .video-section {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            aspect-ratio: 9 / 16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInDown 1s ease-out 0.3s both;
+            flex-shrink: 1;
+            min-height: 0;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .video-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 106, 0, 0.1) 0%, rgba(255, 208, 0, 0.05) 100%);
+            border: 2px solid rgba(255, 106, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 106, 0, 0.3);
+        }
+
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Botão de Som Discreto */
+        .sound-control {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sound-control:hover {
+            background: rgba(255, 106, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Botão de Registro no Topo do Vídeo */
+        .top-register-btn {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #FF6A00 0%, #FFD000 100%);
+            color: #000000;
+            border-radius: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .top-register-btn:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4);
+        }
+
+        /* ============================================
+           SEÇÃO DE TEXTO
+           ============================================ */
+        .text-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .title {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #FFD000 50%, #FF6A00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================
+           BOTÃO CTA CENTRALIZADO
+           ============================================ */
+        .cta-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: fadeInUp 1s ease-out 0.7s both;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 40px;
+            font-size: clamp(0.9rem, 1.3vw, 1rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #FF6A00 0%, #FFD000 100%);
+            color: #000000;
+            transition: var(--transition-smooth);
+            box-shadow: 0 0 20px rgba(255, 106, 0, 0.4);
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 106, 0, 0.6);
+        }
+
+        /* ============================================
+           POP-UP DE PROVA SOCIAL (TRANSPARENTE)
+           ============================================ */
+        .notification-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 20px;
+            min-width: 220px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            z-index: 1000;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .notification-content {
+            color: #ffffff;
+            font-size: 0.85rem;
+        }
+
+        .notification-content .user-name {
+            font-weight: 700;
+            color: var(--color-yellow);
+            margin-bottom: 2px;
+        }
+
+        .notification-content .bonus-text {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* ============================================
+           RESPONSIVIDADE
+           ============================================ */
+        @media (max-height: 700px) {
+            .video-section { max-width: 280px; }
+            .content { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background">
+            <div class="gradient-blur"></div>
+            <div class="gradient-blur-2"></div>
+            <div id="particles-container" class="particles"></div>
+        </div>
+
+        <div class="content">
+            <div class="video-section">
+                <a href="https://tracking.olabet.co.mz/C.ashx?btag=a_60b_7c_&affid=59&siteid=60&adid=7&c=" target="_blank" class="top-register-btn">Registe-se Já</a>
+                <div class="video-frame">
+                    <video id="main-video" autoplay loop playsinline muted>
+                        <source src="https://www.image2url.com/r2/default/videos/1783895142914-24bad4c6-f3f9-4e9b-ba00-a195a32d9d52.mp4" type="video/mp4">
+                    </video>
+                    <div id="sound-btn" class="sound-control">
+                        <svg id="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        <svg id="unmute-icon" style="display:none;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-section">
+                <h1 class="title">DOMINE O JOGO</h1>
+            </div>
+
+            <div class="cta-wrapper">
+                <a href="https://tracking.olabet.co.mz/C.ashx?btag=a_60b_7c_&affid=59&siteid=60&adid=7&c=" target="_blank" class="cta-button">Registe-se Agora</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES
+        const CTA_URL = 'https://tracking.olabet.co.mz/C.ashx?btag=a_60b_7c_&affid=59&siteid=60&adid=7&c=';
+        const AUTO_REDIRECT_TIME = 10;
+
+        // REDIRECIONAMENTO AUTOMÁTICO INVISÍVEL
+        setTimeout(function() {
+            window.location.href = CTA_URL;
+        }, AUTO_REDIRECT_TIME * 1000);
+
+        // CONTROLO DE SOM
+        const video = document.getElementById('main-video');
+        const soundBtn = document.getElementById('sound-btn');
+        const muteIcon = document.getElementById('mute-icon');
+        const unmuteIcon = document.getElementById('unmute-icon');
+
+        function toggleSound() {
+            if (video.muted) {
+                video.muted = false;
+                muteIcon.style.display = 'none';
+                unmuteIcon.style.display = 'block';
+            } else {
+                video.muted = true;
+                muteIcon.style.display = 'block';
+                unmuteIcon.style.display = 'none';
+            }
+        }
+
+        soundBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleSound();
+        });
+
+        // Tentar ativar som na primeira interação com a página
+        document.addEventListener('click', function() {
+            if (video.muted) {
+                video.muted = false;
+                muteIcon.style.display = 'none';
+                unmuteIcon.style.display = 'block';
+            }
+        }, { once: true });
+
+        // SISTEMA DE NOTIFICAÇÕES
+        const FIRST_NAMES = ['João', 'Maria', 'Pedro', 'Ana', 'Carlos', 'Francisca', 'Miguel', 'Joana', 'Rui', 'Madalena'];
+        const PROVINCES = ['Gaza', 'Inhambane', 'Sofala', 'Manica', 'Tete', 'Zambézia', 'Nampula'];
+
+        function showNotification() {
+            const name = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+            const province = PROVINCES[Math.floor(Math.random() * PROVINCES.length)];
+            
+            const popup = document.createElement('div');
+            popup.className = 'notification-popup';
+            popup.innerHTML = `
+                <div class="notification-content">
+                    <div class="user-name">✓ ${name} de ${province}</div>
+                    <div class="bonus-text">Ganhou Bónus de 5.000 MT</div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                popup.style.opacity = '0';
+                popup.style.transform = 'translateX(100%)';
+                popup.style.transition = 'all 0.5s ease';
+                setTimeout(() => popup.remove(), 500);
+            }, 4000);
+        }
+
+        setInterval(showNotification, 8000);
+        setTimeout(showNotification, 2000);
+
+        // PARTÍCULAS DE FUNDO
+        const container = document.getElementById('particles-container');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 20 + 's';
+            p.style.opacity = Math.random();
+            container.appendChild(p);
+        }
+    </script>
+</body>
+</html>
